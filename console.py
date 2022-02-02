@@ -150,14 +150,23 @@ class HBNBCommand(cmd.Cmd):
                 if class_name[0] == inst_count[0]:
                     instance_number =+ 1
             print(instance_number)
-
-
-
-
-
-
-
-
+    
+    def precmd(self, arg):
+        """ executed just before the command line line is interpreted """
+        args = arg.split('.', 1)
+        if len(args) == 2:
+            _class = args[0]
+            args = args[1].split('(', 1)
+            command = args[0]
+            if len(args) == 2:
+                args = args[1].split(')', 1)
+                if len(args) == 2:
+                    _id = args[0]
+                    other_arguments = args[1]
+            line = command + " " + _class + " " + _id + " " + other_arguments
+            return line
+        else:
+            return arg
 
 
 if __name__ == '__main__':
